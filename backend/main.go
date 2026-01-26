@@ -13,5 +13,6 @@ func main() {
 		c.JSON(http.StatusOK, "Welcome to Task")
 	})
 
+	router.Static("/attachments", "attachments")
 	router.Run("localhost:8080")
 }
