@@ -79,3 +79,15 @@ func (u *UserController) Delete(c *gin.Context) {
 
 	c.JSON(http.StatusOK, "Deleted")
 }
+
+func (u *UserController) GetEmployee(c *gin.Context) {
+	users := []models.User{}
+
+	errDB := u.DB.Select("id,name").Where("role=?", "Employee").Find(&users).Error
+	if errDB != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": errDB.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, users)
+}

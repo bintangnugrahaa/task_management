@@ -15,7 +15,7 @@ type User struct {
 	Password  string    `gorm:"type:varchar(255)" json:"password"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
-	Tasks     []Task    `gorm:"constraint:OnDelete:CASCADE" json:"tasks"` //has many
+	Tasks     []Task    `gorm:"constraint:OnDelete:CASCADE" json:"tasks,omitempty"` //has many
 }
 
 func (u *User) AfterDelete(tx *gorm.DB) (err error) {
