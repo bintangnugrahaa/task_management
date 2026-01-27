@@ -40,3 +40,30 @@ func (u *UserController) Login(c *gin.Context) {
 
 	c.JSON(http.StatusOK, user)
 }
+
+func (u *UserController) CreateAccount(c *gin.Context) {
+	user := models.User{}
+	errBindJson := c.ShouldBindJSON(&user)
+	if errBindJson != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": errBindJson.Error()})
+		return
+	}
+
+	emailExist := u.DB.Where("email=?", user.Email).First(&user).RowsAffected != 0
+	if emailExist {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Email already exist"})
+		return
+	}
+
+	hashedPasswordBytes, _ := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
+	user.Password = string(hashedPasswordBytes)
+	user.Role = "Employee"
+
+	errDB := u.DB.Create(&user).Error
+	if errDB != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": errDB.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}
