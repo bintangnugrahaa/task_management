@@ -26,6 +26,7 @@ func main() {
 
 	router.POST("/users/login", UserController.Login)
 	router.POST("/users", UserController.CreateAccount)
+	router.DELETE("/users/:id", UserController.Delete)
 
 	router.Static("/attachments", "attachments")
 	router.Run("localhost:8080")
