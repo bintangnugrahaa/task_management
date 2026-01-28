@@ -17,6 +17,7 @@ func main() {
 
 	// controller
 	UserController := controllers.UserController{DB: db}
+	TaskController := controllers.TaskController{DB: db}
 
 	// router
 	router := gin.Default()
@@ -28,6 +29,8 @@ func main() {
 	router.POST("/users", UserController.CreateAccount)
 	router.DELETE("/users/:id", UserController.Delete)
 	router.GET("/users/Employee", UserController.GetEmployee)
+
+	router.POST("/tasks", TaskController.Create)
 
 	router.Static("/attachments", "attachments")
 	router.Run("localhost:8080")
