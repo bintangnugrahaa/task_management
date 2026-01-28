@@ -31,6 +31,7 @@ func main() {
 	router.GET("/users/Employee", UserController.GetEmployee)
 
 	router.POST("/tasks", TaskController.Create)
+	router.DELETE("/tasks/:id", TaskController.Delete)
 
 	router.Static("/attachments", "attachments")
 	router.Run("localhost:8080")
