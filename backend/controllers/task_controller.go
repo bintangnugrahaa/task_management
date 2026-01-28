@@ -95,3 +95,27 @@ func (t *TaskController) Submit(c *gin.Context) {
 
 	c.JSON(http.StatusOK, "Submit to Review")
 }
+
+func (t *TaskController) Reject(c *gin.Context) {
+	task := models.Task{}
+	id := c.Param("id")
+	reason := c.PostForm("reason")
+	rejectedDate := c.PostForm("rejectedDate")
+
+	if err := t.DB.First(&task, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+		return
+	}
+
+	errDB := t.DB.Where("id=?", id).Updates(models.Task{
+		Status:       "Rejected",
+		Reason:       reason,
+		RejectedDate: rejectedDate,
+	}).Error
+	if errDB != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": errDB.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, "Rejected")
+}
