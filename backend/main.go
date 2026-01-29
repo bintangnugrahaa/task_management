@@ -35,6 +35,7 @@ func main() {
 	router.PATCH("/tasks/:id/submit", TaskController.Submit)
 	router.PATCH("/tasks/:id/reject", TaskController.Reject)
 	router.PATCH("/tasks/:id/fix", TaskController.Fix)
+	router.PATCH("/tasks/:id/approve", TaskController.Approve)
 
 	router.Static("/attachments", "attachments")
 	router.Run("localhost:8080")
