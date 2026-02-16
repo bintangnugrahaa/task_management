@@ -39,6 +39,7 @@ func main() {
 	router.GET("/tasks/:id", TaskController.FindById)
 	router.GET("/tasks/review/asc", TaskController.NeedToBeReview)
 	router.GET("/tasks/progress/:userId", TaskController.ProgressTasks)
+	router.GET("/tasks/stat/:userId", TaskController.Statistic)
 
 	router.Static("/attachments", "attachments")
 	router.Run("localhost:8080")
