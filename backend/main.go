@@ -38,6 +38,7 @@ func main() {
 	router.PATCH("/tasks/:id/approve", TaskController.Approve)
 	router.GET("/tasks/:id", TaskController.FindById)
 	router.GET("/tasks/review/asc", TaskController.NeedToBeReview)
+	router.GET("/tasks/progress/:userId", TaskController.ProgressTasks)
 
 	router.Static("/attachments", "attachments")
 	router.Run("localhost:8080")
