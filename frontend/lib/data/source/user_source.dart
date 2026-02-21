@@ -56,4 +56,20 @@ class UserSource {
       return false;
     }
   }
+
+  static Future<List<User>?> getEmployee() async {
+    try {
+      final response = await http.get(Uri.parse('$_baseURL/Employee'));
+      DMethod.logResponse(response);
+
+      if (response.statusCode == 200) {
+        List resBody = jsonDecode(response.body);
+        return resBody.map((e) => User.fromJson(Map.from(e))).toList();
+      }
+      return null;
+    } catch (e) {
+      DMethod.log(e.toString(), colorCode: 1);
+      return null;
+    }
+  }
 }
