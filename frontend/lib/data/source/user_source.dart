@@ -44,4 +44,16 @@ class UserSource {
       return false;
     }
   }
+
+  static Future<bool> delete(int userId) async {
+    try {
+      final response = await http.delete(Uri.parse('$_baseURL/$userId'));
+      DMethod.logResponse(response);
+
+      return response.statusCode == 200;
+    } catch (e) {
+      DMethod.log(e.toString(), colorCode: 1);
+      return false;
+    }
+  }
 }
